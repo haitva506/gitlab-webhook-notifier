@@ -1,0 +1,16 @@
+version: '2.2'
+services:
+
+  # webhook
+  webhook:
+    image: 'gitlab-webhook-notifier'
+    restart: always
+    #command: ["sleep","infinity"]
+    container_name: webhook
+    hostname: 'gitlab-webhook-notifier'
+    networks:
+      gitlab-network:
+        ipv4_address: 172.21.0.19
+networks:
+  gitlab-network:
+    name: gitlab-network
