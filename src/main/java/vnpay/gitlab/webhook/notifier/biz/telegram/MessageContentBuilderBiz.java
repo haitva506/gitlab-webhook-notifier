@@ -8,29 +8,29 @@ public class MessageContentBuilderBiz {
         String content = "";
         if (message instanceof BuildEvent) {
             BuildEvent buildEvent = (BuildEvent) message;
-            content = String.format(getBaseMessage(), buildEvent.getRepository().getName(), EventType.EVN_TYPE_BUILD.toUpperCase(), buildEvent.getUser().getName()) +
+            content = String.format(buildBaseMessage(), buildEvent.getRepository().getName(), EventType.EVN_TYPE_BUILD.toUpperCase(), buildEvent.getUser().getName()) +
                     "\n\n" +
-                    getMessageBuildEvent(buildEvent);
+                    buildMessageBuildEvent(buildEvent);
         }
 
         if (message instanceof PushEvent) {
             PushEvent pushEvent = (PushEvent) message;
-            content = String.format(getBaseMessage(), pushEvent.getRepository().getName(), EventType.EVN_TYPE_PUSH.toUpperCase(), pushEvent.getUserName()) +
+            content = String.format(buildBaseMessage(), pushEvent.getRepository().getName(), EventType.EVN_TYPE_PUSH.toUpperCase(), pushEvent.getUserName()) +
                     "\n\n" +
-                    getMessagePushEvent(pushEvent);
+                    buildMessagePushEvent(pushEvent);
         }
 
         if (message instanceof PipelineEvent) {
             PipelineEvent pipelineEvent = (PipelineEvent) message;
-            content = String.format(getBaseMessage(), pipelineEvent.getProject().getName(), EventType.EVN_TYPE_PIPELINE.toUpperCase(), pipelineEvent.getUser().getName()) +
+            content = String.format(buildBaseMessage(), pipelineEvent.getProject().getName(), EventType.EVN_TYPE_PIPELINE.toUpperCase(), pipelineEvent.getUser().getName()) +
                     "\n\n" +
-                    getMessagePipelineEvent(pipelineEvent);
+                    buildMessagePipelineEvent(pipelineEvent);
         }
 
         return content;
     }
 
-    public static String getMessageBuildEvent(BuildEvent buildEvent) {
+    public static String buildMessageBuildEvent(BuildEvent buildEvent) {
         StringBuilder message = new StringBuilder();
 
         message.append("Stage: ").append(buildEvent.getBuildStage());
@@ -44,7 +44,7 @@ public class MessageContentBuilderBiz {
         return message.toString();
     }
 
-    public static String getMessagePipelineEvent(PipelineEvent pipelineEvent) {
+    public static String buildMessagePipelineEvent(PipelineEvent pipelineEvent) {
         StringBuilder message = new StringBuilder();
 
         message.append("<b>Build Information's:</b> ");
@@ -62,7 +62,7 @@ public class MessageContentBuilderBiz {
         return message.toString();
     }
 
-    public static String getMessagePushEvent(PushEvent pushEvent) {
+    public static String buildMessagePushEvent(PushEvent pushEvent) {
         StringBuilder message = new StringBuilder();
 
         message.append("<b>Commit message:</b> ");
@@ -73,7 +73,7 @@ public class MessageContentBuilderBiz {
         return message.toString();
     }
 
-    public static String getBaseMessage() {
+    public static String buildBaseMessage() {
         StringBuilder message = new StringBuilder();
 
         message.append("<b>[GIT-LAB NOTIFY]</b>");
